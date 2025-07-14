@@ -50,7 +50,7 @@ export function RecipeCard({ recipe, isFavorite, onToggleFavorite, isGeneratingI
         </div>
       </CardHeader>
       <CardContent className="flex-grow space-y-6">
-        <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
+        <div className="relative aspect-square w-full max-w-sm mx-auto overflow-hidden rounded-lg bg-muted">
            {isGeneratingImage && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground z-10">
               <Loader2 className="h-8 w-8 animate-spin" />
