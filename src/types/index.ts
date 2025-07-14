@@ -1,3 +1,5 @@
 import type { GenerateRecipeOutput } from '@/ai/flows/generate-recipe';
 
-export type Recipe = GenerateRecipeOutput;
+export type Recipe = GenerateRecipeOutput & {
+    imageUrl?: string;
+};

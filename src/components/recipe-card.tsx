@@ -11,16 +11,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Star, Utensils } from 'lucide-react';
+import { Star, Utensils, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Skeleton } from './ui/skeleton';
 
 type RecipeCardProps = {
   recipe: Recipe;
   isFavorite: boolean;
   onToggleFavorite: () => void;
+  isGeneratingImage?: boolean;
 };
 
-export function RecipeCard({ recipe, isFavorite, onToggleFavorite }: RecipeCardProps) {
+export function RecipeCard({ recipe, isFavorite, onToggleFavorite, isGeneratingImage }: RecipeCardProps) {
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
       <CardHeader>
@@ -48,15 +50,28 @@ export function RecipeCard({ recipe, isFavorite, onToggleFavorite }: RecipeCardP
         </div>
       </CardHeader>
       <CardContent className="flex-grow space-y-6">
-        <div className="relative aspect-video w-full overflow-hidden rounded-lg">
-           <Image
-            src="https://placehold.co/600x400.png"
-            alt={recipe.title}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-300 hover:scale-105"
-            data-ai-hint="food meal"
-          />
+        <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
+           {isGeneratingImage && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground z-10">
+              <Loader2 className="h-8 w-8 animate-spin" />
+              <p>Generating image...</p>
+            </div>
+           )}
+           {!isGeneratingImage && !recipe.imageUrl && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground">
+                <ImageIcon className="h-12 w-12" />
+                <p>No image available</p>
+              </div>
+            )}
+           {recipe.imageUrl && (
+             <Image
+              src={recipe.imageUrl}
+              alt={recipe.title}
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-300 hover:scale-105"
+            />
+           )}
         </div>
 
         <div>
